@@ -1,0 +1,4 @@
+datasource:
+  address: "production.localhost"
+  port: "9900"
+  collection: "collection-name"

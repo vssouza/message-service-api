@@ -1,0 +1,4 @@
+datasource:
+  address: "development.localhost"
+  port: "9988"
+  collection: "my-collection"
