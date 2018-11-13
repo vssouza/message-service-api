@@ -6,8 +6,6 @@ import com.example.message.configuration.ServiceInfo;
 import com.example.message.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +17,6 @@ public class MessageServiceAPIController {
     private MongoDataSourceConfiguration dataSourceConfig;
     private ServiceInfo serviceInfo;
     private AMQPDatasource amqpDatasource;
-    private static final String AMQP_SERVER = "amqp-server";
 
     @Autowired
     public MessageServiceAPIController(final MongoDataSourceConfiguration dataSourceConfig, final ServiceInfo serviceInfo) {
@@ -55,18 +52,5 @@ public class MessageServiceAPIController {
     @RequestMapping(path = "/message/service/info", method = RequestMethod.GET)
     public ServiceInfo getServiceInfo() {
         return serviceInfo;
-    }
-
-    @Bean(name = "amqp-datasource")
-    @Profile("development")
-    public AMQPDatasource getDevelopmentAMQPDatasource() {
-        String serverName = String.format("%s-%s", "dev", AMQP_SERVER);
-        return new AMQPDatasource(serverName, 1213, "dev-partition", true);
-    }
-
-    @Bean(name = "amqp-datasource")
-    @Profile("production")
-    public AMQPDatasource getProductionAMQPDatasource() {
-        return new AMQPDatasource(AMQP_SERVER, 1210, "prd-partition", false);
     }
 }
