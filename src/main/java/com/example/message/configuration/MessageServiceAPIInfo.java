@@ -18,9 +18,9 @@ public class MessageServiceAPIInfo {
     public MessageServiceAPIInfo() {
         paths = new ArrayList<>();
         paths.add(BASE_PATH);
-        paths.add(MONGO_INFO_PATH);
-        paths.add(RABBIT_INFO_PATH);
-        paths.add(SERVICE_INFO_PATH);
+        paths.add(BASE_PATH + MONGO_INFO_PATH);
+        paths.add(BASE_PATH + RABBIT_INFO_PATH);
+        paths.add(BASE_PATH + SERVICE_INFO_PATH);
     }
 
     @Getter
