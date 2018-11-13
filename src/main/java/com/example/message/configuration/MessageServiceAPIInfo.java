@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ServiceInfo {
+public class MessageServiceAPIInfo {
 
     public static final String BASE_PATH = "/message";
     public static final String MONGO_INFO_PATH = "/mongo/info";
     public static final String RABBIT_INFO_PATH ="/rabbit/info";
     public static final String SERVICE_INFO_PATH = "/service/info";
 
-    public ServiceInfo() {
+    public MessageServiceAPIInfo() {
         paths = new ArrayList<>();
         paths.add(BASE_PATH);
         paths.add(MONGO_INFO_PATH);
