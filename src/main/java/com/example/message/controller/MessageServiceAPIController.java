@@ -30,7 +30,7 @@ public class MessageServiceAPIController {
         this.amqpDatasource = amqpDatasource;
     }
 
-    @RequestMapping(path = "/message", method = RequestMethod.GET)
+    @RequestMapping(path = ServiceInfo.BASE_PATH, method = RequestMethod.GET)
     public Message sendMessage(@RequestParam(value = "messageid") int messageId,
                                @RequestParam(value = "message", defaultValue = "This is a default message") String message) {
         final Message messageEntity = new Message();
@@ -39,17 +39,17 @@ public class MessageServiceAPIController {
         return messageEntity;
     }
 
-    @RequestMapping(path = "/message/mongo/info", method = RequestMethod.GET)
+    @RequestMapping(path = ServiceInfo.BASE_PATH + ServiceInfo.MONGO_INFO_PATH, method = RequestMethod.GET)
     public MongoDataSourceConfiguration getMongoConfigInfo() {
         return dataSourceConfig;
     }
 
-    @RequestMapping(path = "/message/rabbit/info", method = RequestMethod.GET)
+    @RequestMapping(path = ServiceInfo.BASE_PATH + ServiceInfo.RABBIT_INFO_PATH, method = RequestMethod.GET)
     public AMQPDatasource getRabbitConfigInfo() {
         return amqpDatasource;
     }
 
-    @RequestMapping(path = "/message/service/info", method = RequestMethod.GET)
+    @RequestMapping(path = ServiceInfo.BASE_PATH + ServiceInfo.SERVICE_INFO_PATH, method = RequestMethod.GET)
     public ServiceInfo getServiceInfo() {
         return serviceInfo;
     }
