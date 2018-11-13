@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(path = MessageAPIInfo.BASE_PATH)
 public class MessageAPIController {
 
     private MongoDataSourceConfiguration dataSourceConfig;
@@ -35,23 +36,23 @@ public class MessageAPIController {
         this.amqpDatasource = amqpDatasource;
     }
 
-    @RequestMapping(path = MessageAPIInfo.BASE_PATH, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public Message sendMessage(@RequestParam(value = "messageid") int messageId,
                                @RequestParam(value = "message", defaultValue = "This is a default message") String message) {
         return messageAPIService.generateMessage(messageId, message);
     }
 
-    @RequestMapping(path = MessageAPIInfo.BASE_PATH + MessageAPIInfo.MONGO_INFO_PATH, method = RequestMethod.GET)
+    @RequestMapping(path = MessageAPIInfo.MONGO_INFO_PATH, method = RequestMethod.GET)
     public MongoDataSourceConfiguration getMongoConfigInfo() {
         return dataSourceConfig;
     }
 
-    @RequestMapping(path = MessageAPIInfo.BASE_PATH + MessageAPIInfo.RABBIT_INFO_PATH, method = RequestMethod.GET)
+    @RequestMapping(path = MessageAPIInfo.RABBIT_INFO_PATH, method = RequestMethod.GET)
     public AMQPDatasource getRabbitConfigInfo() {
         return amqpDatasource;
     }
 
-    @RequestMapping(path = MessageAPIInfo.BASE_PATH + MessageAPIInfo.SERVICE_INFO_PATH, method = RequestMethod.GET)
+    @RequestMapping(path = MessageAPIInfo.SERVICE_INFO_PATH, method = RequestMethod.GET)
     public MessageAPIInfo getServiceInfo() {
         return serviceInfo;
     }
