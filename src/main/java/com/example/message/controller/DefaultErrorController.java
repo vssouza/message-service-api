@@ -30,7 +30,7 @@ public class DefaultErrorController implements ErrorController {
 
     @RequestMapping(path = PATH)
     public Map<String, Object> error(HttpServletRequest request, WebRequest webRequest){
-        Map<String, Object> body = getErrorAttributes(webRequest,getTraceParameter(request));
+        Map<String, Object> body = getErrorAttributes(webRequest, getTraceParameter(request));
         String trace = (String) body.get("trace");
         if(trace != null){
             String[] lines = trace.split("\n\t");
