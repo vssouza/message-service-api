@@ -38,6 +38,9 @@ public class MessageAPIController {
         this.amqpDatasource = amqpDatasource;
     }
 
+    /*
+     * To test the locale add the Accept-Language header to the API call (set it to pt for test)
+     */
     @RequestMapping(method = RequestMethod.GET)
     public Message sendMessage(@RequestParam(value = "messageid") int messageId,
                                @RequestParam(value = "message", defaultValue = "This is a default message") String message,
