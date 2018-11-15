@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Locale;
+
 @RestController
 @RequestMapping(path = MessageAPIInfo.BASE_PATH)
 public class MessageAPIController {
@@ -38,8 +40,9 @@ public class MessageAPIController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Message sendMessage(@RequestParam(value = "messageid") int messageId,
-                               @RequestParam(value = "message", defaultValue = "This is a default message") String message) {
-        return messageAPIService.generateMessage(messageId, message);
+                               @RequestParam(value = "message", defaultValue = "This is a default message") String message,
+                               Locale locale) {
+        return messageAPIService.generateMessage(messageId, message, locale);
     }
 
     @RequestMapping(path = MessageAPIInfo.MONGO_INFO_PATH, method = RequestMethod.GET)
