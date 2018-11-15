@@ -12,15 +12,14 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.Instant;
 
 @RestControllerAdvice
-public class BusinessRandomExceptionHandler {
-
-    @ExceptionHandler(BusinessRandomException.class)
+public class GlobalExceptionHandler {
+    @ExceptionHandler(RuntimeException.class)
     public final ResponseEntity<ErrorMessage> handleException(Exception ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
-        HttpStatus status = HttpStatus.CONFLICT;
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         ErrorMessage errorMessage = ErrorMessage.of(
                 status.value(),
-                "Business Random Error",
+                "Global Runtime Error",
                 ex.getMessage(),
                 ((ServletWebRequest) request).getRequest().getServletPath()
         );
@@ -35,4 +34,5 @@ public class BusinessRandomExceptionHandler {
         private String message;
         private String path;
     }
+
 }
