@@ -1,4 +1,4 @@
-package com.example.message.controller;
+package com.example.message.exception;
 
 import com.example.message.exception.BusinessRandomException;
 import lombok.Value;
