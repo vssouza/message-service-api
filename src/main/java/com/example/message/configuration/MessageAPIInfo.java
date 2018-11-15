@@ -14,6 +14,8 @@ public class MessageAPIInfo {
     public static final String MONGO_INFO_PATH = "/mongo/info";
     public static final String RABBIT_INFO_PATH ="/rabbit/info";
     public static final String SERVICE_INFO_PATH = "/service/info";
+    public static final String BUSINESS_EXCEPTION_PATH = "/business/exception";
+    public static final String GENERAL_EXCEPTION_PATH = "/general/exception";
 
     public MessageAPIInfo() {
         paths = new ArrayList<>();
@@ -21,6 +23,8 @@ public class MessageAPIInfo {
         paths.add(BASE_PATH + MONGO_INFO_PATH);
         paths.add(BASE_PATH + RABBIT_INFO_PATH);
         paths.add(BASE_PATH + SERVICE_INFO_PATH);
+        paths.add(BASE_PATH + BUSINESS_EXCEPTION_PATH);
+        paths.add(BASE_PATH + GENERAL_EXCEPTION_PATH);
     }
 
     @Getter

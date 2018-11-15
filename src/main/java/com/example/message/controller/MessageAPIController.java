@@ -4,13 +4,11 @@ import com.example.message.configuration.AMQPDatasource;
 import com.example.message.configuration.MongoDataSourceConfiguration;
 import com.example.message.configuration.MessageAPIInfo;
 import com.example.message.entity.Message;
+import com.example.message.exception.BusinessRandomException;
 import com.example.message.service.MessageAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
@@ -61,5 +59,15 @@ public class MessageAPIController {
     @RequestMapping(path = MessageAPIInfo.SERVICE_INFO_PATH, method = RequestMethod.GET)
     public MessageAPIInfo getServiceInfo() {
         return serviceInfo;
+    }
+
+    @RequestMapping(path = MessageAPIInfo.BUSINESS_EXCEPTION_PATH, method = RequestMethod.GET)
+    public MessageAPIInfo getBusinessException() {
+        throw new BusinessRandomException("This is a Business Random Exception test.");
+    }
+
+    @RequestMapping(path = MessageAPIInfo.GENERAL_EXCEPTION_PATH, method = RequestMethod.GET)
+    public MessageAPIInfo getGeneralException() {
+        throw new RuntimeException("This is a Non Expected Runtime Exception test.");
     }
 }
