@@ -28,15 +28,27 @@ public class DefaultErrorController implements ErrorController {
         return PATH;
     }
 
+    @RequestMapping(path = "/404")
+    public Map<String, Object> error404(HttpServletRequest request, WebRequest webRequest) {
+        Map<String, Object> body = getErrorAttributes(webRequest, getTraceParameter(request));
+        generateTraceInformation(body);
+        body.put("message", "You reached a dark place!");
+        return body;
+    }
+
     @RequestMapping(path = PATH)
     public Map<String, Object> error(HttpServletRequest request, WebRequest webRequest){
         Map<String, Object> body = getErrorAttributes(webRequest, getTraceParameter(request));
+        generateTraceInformation(body);
+        return body;
+    }
+
+    private void generateTraceInformation(Map<String, Object> body) {
         String trace = (String) body.get("trace");
         if(trace != null){
             String[] lines = trace.split("\n\t");
             body.put("trace", lines);
         }
-        return body;
     }
 
     private boolean getTraceParameter(HttpServletRequest request) {
