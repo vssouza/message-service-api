@@ -10,8 +10,12 @@ import java.util.Locale;
 @Service
 public class MessageAPIService {
 
-    @Autowired
     ResourceBundleMessageSource resourceBundleMessageSource;
+
+    @Autowired
+    public void setResourceBundleMessageSource(ResourceBundleMessageSource resourceBundleMessageSource) {
+        this.resourceBundleMessageSource = resourceBundleMessageSource;
+    }
 
     public Message generateMessage(final int messageId, final String message, Locale locale) {
         final Message messageEntity = new Message();
