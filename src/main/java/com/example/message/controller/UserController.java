@@ -4,9 +4,11 @@ import com.example.message.configuration.MessageAPIInfo;
 import com.example.message.entity.User;
 import com.example.message.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Map;
 
@@ -22,19 +24,19 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody @NotNull User user) {
+    public User addUser(@RequestBody @Valid User user) {
         return userService.createUser(user);
     }
 
     @PutMapping(path = MessageAPIInfo.URL_ID_PATH)
     public User updateUser(@PathVariable(value = "id") final long id,
-                           @RequestBody @NotNull User user) {
+                           @RequestBody @Valid User user) {
         return userService.replaceUser(id, user);
     }
 
     @PatchMapping(path = MessageAPIInfo.URL_ID_PATH)
     public User updatePartialUser(@PathVariable(value = "id") final long id,
-                                  @RequestBody @NotNull Map<String, @NotNull Object> userPatch) {
+                                  @RequestBody Map<@NotEmpty  String, Object> userPatch) throws MethodArgumentNotValidException {
         return userService.updatePartialUser(id, userPatch);
     }
 

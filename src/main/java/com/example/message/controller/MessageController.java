@@ -8,6 +8,7 @@ import com.example.message.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message sendMessage(@RequestBody @NotNull final Message message) {
+    public Message sendMessage(@RequestBody @Valid final Message message) {
         User retrievedSender = userService.retrieveUser(message.getSender().getId());
         User retrievedReceiver = userService.retrieveUser(message.getReceiver().getId());
         return messageService.sendMessage(retrievedSender, retrievedReceiver, message);

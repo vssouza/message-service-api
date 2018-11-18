@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "MESSAGEAPI_USERS")
@@ -19,7 +20,7 @@ public class User {
     @Getter @Setter
     private long id;
     @Setter @Getter
-    @NotEmpty
+    @NotEmpty @NotNull
     private String username;
     @Setter @Getter
     @NotEmpty @Email

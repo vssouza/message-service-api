@@ -7,6 +7,9 @@ import com.example.message.exception.UserNotFoundException;
 import com.example.message.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.DataBinder;
+import org.springframework.validation.SmartValidator;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,9 @@ public class UserService {
 
     private UserRepository userRepository;
     private NullAwareBeanUtilsBean nullAwareBeanUtils;
+
+    @Autowired
+    private SmartValidator validator;
 
     @Autowired
     public void setNullAwareBeanUtils(NullAwareBeanUtilsBean nullAwareBeanUtils) {
@@ -52,16 +58,20 @@ public class UserService {
                 });
     }
 
-    public User updatePartialUser(final long id, Map<String, Object> attributesToPatch) {
+    public User updatePartialUser(final long id, Map<String, Object> attributesToPatch) throws MethodArgumentNotValidException{
         User user = retrieveUser(id);
-        attributesToPatch.forEach((key, value) -> {
-            try {
-                nullAwareBeanUtils.copyProperty(user, key, value);
-            } catch(UnsupportedOperationException ex) {
-                throw new PartialUpdateOperationException("There was a problem patching the object.");
+        try {
+            attributesToPatch.forEach((key, value) -> nullAwareBeanUtils.copyProperty(user, key, value));
+            DataBinder binder = new DataBinder(user);
+            binder.setValidator(validator);
+            binder.validate();
+            if(binder.getBindingResult().getAllErrors().size() > 0) {
+                throw new MethodArgumentNotValidException(null, binder.getBindingResult());
             }
-        });
-        return userRepository.save(user);
+            return userRepository.save(user);
+        } catch(UnsupportedOperationException ex) {
+            throw new PartialUpdateOperationException("There was a problem patching the object.");
+        }
     }
 
     public List<User> listUsers() {
