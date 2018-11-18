@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 
 @Service
-public class MessageAPIService {
+public class MessageService {
 
     ResourceBundleMessageSource resourceBundleMessageSource;
 
@@ -17,12 +17,9 @@ public class MessageAPIService {
         this.resourceBundleMessageSource = resourceBundleMessageSource;
     }
 
-    public Message generateMessage(final int messageId, final String message, Locale locale) {
-        final Message messageEntity = new Message();
-        messageEntity.setMessageId(messageId);
-        messageEntity.setMessage(String.format("%s: %s",
-                resourceBundleMessageSource.getMessage("message.label", null, locale) ,message));
-        return messageEntity;
-    }
+//    public Message sendMessage(long senderId, long receiverId, final String message, Locale locale) {
+//        String messageLabel = resourceBundleMessageSource.getMessage("message.label", null, locale) ,message)
+//
+//    }
 
 }

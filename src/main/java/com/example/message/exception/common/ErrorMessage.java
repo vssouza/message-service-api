@@ -1,4 +1,4 @@
-package com.example.message.exception;
+package com.example.message.exception.common;
 
 import lombok.Value;
 
