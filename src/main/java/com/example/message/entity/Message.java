@@ -3,6 +3,7 @@ package com.example.message.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -15,17 +16,14 @@ public class Message {
     @SuppressWarnings("unused")
     @Getter
     private long id;
-    @Setter
-    @Getter
-    @NotNull
+    @Setter @Getter
+    @NotEmpty
     private String message;
-    @Setter
-    @Getter
+    @Setter @Getter
     @NotNull
     @ManyToOne
     private User sender;
-    @Setter
-    @Getter
+    @Setter @Getter
     @NotNull
     @ManyToOne
     private User receiver;

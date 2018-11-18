@@ -1,8 +1,13 @@
 package com.example.message.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "MESSAGEAPI_USERS")
@@ -10,16 +15,14 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue
-    @SuppressWarnings("unused")
-    @Getter
-    @Setter
+    @GeneratedValue @SuppressWarnings("unused")
+    @Getter @Setter
     private long id;
-    @Setter
-    @Getter
+    @Setter @Getter
+    @NotEmpty
     private String username;
-    @Setter
-    @Getter
+    @Setter @Getter
+    @NotEmpty @Email
     private String email;
 
     public User(final String username, final String email) {

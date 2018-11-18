@@ -19,7 +19,7 @@ public class MessageNotFoundExceptionHandler extends BaseExceptionHandler {
     private final String NOT_FOUND_MESSAGE_EXCEPTION_MESSAGE = "exception.message.message_not_found";
 
     @ExceptionHandler(MessageNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleException(final Exception ex, final WebRequest request) {
+    public final  ResponseEntity<ErrorMessage> handleException(final Exception ex, final WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = HttpStatus.NOT_FOUND;
         ErrorMessage errorMessage = new ErrorMessage(
