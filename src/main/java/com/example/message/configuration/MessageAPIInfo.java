@@ -1,7 +1,10 @@
 package com.example.message.configuration;
 
+import com.example.message.entity.ServiceInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,9 +17,7 @@ public class MessageAPIInfo {
     public static final String URL_ID_PATH = "/{id}";
     public static final String USER_BASE_PATH = BASE_PATH + "/users";
     public static final String MESSAGE_BASE_PATH = BASE_PATH + "/messages";
-
-
-
+    public static final String SERVICE_INFO_BASE_PATH= BASE_PATH + "/info";
 
     public MessageAPIInfo() {
         paths = new ArrayList<>();
@@ -24,18 +25,35 @@ public class MessageAPIInfo {
         paths.add(USER_BASE_PATH);
         paths.add(MESSAGE_BASE_PATH);
         paths.add(USER_BASE_PATH + URL_ID_PATH);
+        paths.add(SERVICE_INFO_BASE_PATH);
         paths.add(MESSAGE_BASE_PATH + URL_ID_PATH);
 
     }
 
+    @Autowired
     @Getter
-    @Value("${service.name}")
-    private String name;
-    @Getter
-    @Value("${service.version}")
-    private String version;
+    @JsonProperty("service-info:")
+    private ServiceInfo serviceInfo;
 
     @Getter
     private List<String> paths;
+
+    @Getter
+    @JsonProperty("amqp-datasource")
+    private AMQPDatasource amqpDatasource;
+
+    @Getter
+    @JsonProperty("h2-datasource")
+    private H2DataSourceConfiguration h2DataSourceConfiguration;
+
+    @Autowired
+    public void setAmqpDatasource(final AMQPDatasource amqpDatasource) {
+        this.amqpDatasource = amqpDatasource;
+    }
+
+    @Autowired
+    public void setH2DataSourceConfiguration(final H2DataSourceConfiguration h2DataSourceConfiguration){
+        this.h2DataSourceConfiguration = h2DataSourceConfiguration;
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.example.message.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 public class AMQPDatasourceConfig {
 
     private static final String AMQP_SERVER = "amqp-server";
+    private AMQPDatasource amqpDatasource;
 
     @Bean(name = "amqp-datasource")
     @Profile("development")
@@ -20,5 +23,11 @@ public class AMQPDatasourceConfig {
     @Profile("production")
     public AMQPDatasource getProductionAMQPDatasource() {
         return new AMQPDatasource(AMQP_SERVER, 1210, "prd-partition", false);
+    }
+
+    @Autowired
+    @Qualifier("amqp-datasource")
+    public void setAmqpDatasource(final AMQPDatasource amqpDatasource) {
+        this.amqpDatasource = amqpDatasource;
     }
 }
