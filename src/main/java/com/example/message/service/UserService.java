@@ -5,10 +5,9 @@ import com.example.message.entity.User;
 import com.example.message.exception.PartialUpdateOperationException;
 import com.example.message.exception.UserNotFoundException;
 import com.example.message.repository.UserRepository;
+import com.example.message.service.common.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.DataBinder;
-import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
@@ -16,13 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserService {
+public class UserService extends ValidationService {
 
     private UserRepository userRepository;
     private NullAwareBeanUtilsBean nullAwareBeanUtils;
 
-    @Autowired
-    private SmartValidator validator;
+
 
     @Autowired
     public void setNullAwareBeanUtils(NullAwareBeanUtilsBean nullAwareBeanUtils) {
@@ -62,12 +60,7 @@ public class UserService {
         User user = retrieveUser(id);
         try {
             attributesToPatch.forEach((key, value) -> nullAwareBeanUtils.copyProperty(user, key, value));
-            DataBinder binder = new DataBinder(user);
-            binder.setValidator(validator);
-            binder.validate();
-            if(binder.getBindingResult().getAllErrors().size() > 0) {
-                throw new MethodArgumentNotValidException(null, binder.getBindingResult());
-            }
+            this.invokeManualValidation(user);
             return userRepository.save(user);
         } catch(UnsupportedOperationException ex) {
             throw new PartialUpdateOperationException("There was a problem patching the object.");
