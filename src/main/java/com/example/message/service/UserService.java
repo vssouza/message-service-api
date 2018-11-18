@@ -54,11 +54,13 @@ public class UserService {
 
     public User updatePartialUser(final long id, Map<String, Object> attributesToPatch) {
         User user = retrieveUser(id);
-        try {
-            attributesToPatch.forEach((key, value) -> nullAwareBeanUtils.copyProperty(user, key, value));
-        } catch(UnsupportedOperationException ex) {
-            throw new PartialUpdateOperationException("There was a problem patching the object.");
-        }
+        attributesToPatch.forEach((key, value) -> {
+            try {
+                nullAwareBeanUtils.copyProperty(user, key, value);
+            } catch(UnsupportedOperationException ex) {
+                throw new PartialUpdateOperationException("There was a problem patching the object.");
+            }
+        });
         return userRepository.save(user);
     }
 
