@@ -1,8 +1,8 @@
 package com.example.message.exception.handler;
 
-import com.example.message.exception.common.ErrorMessage;
-import com.example.message.exception.UserNotFoundException;
 import com.example.message.exception.common.BaseExceptionHandler;
+import com.example.message.exception.common.ErrorMessage;
+
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,20 +12,21 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
+
 @RestControllerAdvice
-@Order(1)
-public class UserNotFoundExceptionHandler extends BaseExceptionHandler {
+@Order(2)
+public class GlobalExceptionHandler extends BaseExceptionHandler {
 
-    private static final String USER_NOT_FOUND_EXCEPTION_MESSAGE = "exception.message.user_not_found";
+    private static final String GLOBAL_EXCEPTION_MESSAGE = "exception.message.global";
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleException(final Exception ex, final WebRequest request) {
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<ErrorMessage> handleException(final Exception ex, final WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
-        HttpStatus status = HttpStatus.NOT_FOUND;
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         ErrorMessage errorMessage = new ErrorMessage(
                 status.value(),
                 status.getReasonPhrase(),
-                this.getLocalizedMessage(ex, USER_NOT_FOUND_EXCEPTION_MESSAGE, request.getLocale()),
+                this.getLocalizedMessage(ex, GLOBAL_EXCEPTION_MESSAGE, request.getLocale()),
                 ((ServletWebRequest) request).getRequest().getServletPath()
         );
         return new ResponseEntity<>(errorMessage, headers, status);

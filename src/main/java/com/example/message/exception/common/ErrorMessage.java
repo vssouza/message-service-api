@@ -1,16 +1,27 @@
 package com.example.message.exception.common;
 
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.time.Instant;
 
-@Value(staticConstructor = "of")
+@RequiredArgsConstructor
 public class ErrorMessage {
 
-    private Instant timestamp = Instant.now();
-    private Integer status;
-    private String error;
-    private String message;
-    private String path;
+    @JsonProperty
+    @Getter
+    private final Instant timestamp = Instant.now();
+    @JsonProperty
+    @Getter
+    private final Integer status;
+    @JsonProperty
+    @Getter
+    private final String error;
+    @JsonProperty
+    @Getter
+    private final String message;
+    @JsonProperty
+    @Getter
+    private final String path;
 
 }

@@ -3,7 +3,7 @@ package com.example.message.service;
 import com.example.message.entity.Message;
 import com.example.message.entity.User;
 import com.example.message.exception.BusinessInvalidUserException;
-import com.example.message.exception.NotFoundMessageException;
+import com.example.message.exception.MessageNotFoundException;
 import com.example.message.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class MessageService {
         if(messageRepository.existsById(id)) {
             return messageRepository.findById(id).get();
         }
-        throw new NotFoundMessageException("The specified message could not be found.");
+        throw new MessageNotFoundException("The specified message could not be found.");
     }
 
     public Message deleteMessage(long id) {
