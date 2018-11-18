@@ -1,70 +1,51 @@
 package com.example.message.controller;
 
-import com.example.message.configuration.AMQPDatasource;
-import com.example.message.configuration.MongoDataSourceConfiguration;
 import com.example.message.configuration.MessageAPIInfo;
-import com.example.message.exception.BusinessRandomException;
+import com.example.message.entity.Message;
+import com.example.message.entity.User;
 import com.example.message.service.MessageService;
+import com.example.message.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(path = MessageAPIInfo.BASE_PATH)
+@RequestMapping(path = MessageAPIInfo.MESSAGE_BASE_PATH)
 public class MessageController {
 
-    private MongoDataSourceConfiguration dataSourceConfig;
-    private MessageAPIInfo serviceInfo;
-    private AMQPDatasource amqpDatasource;
-    private MessageService messageAPIService;
+    private MessageService messageService;
+    private UserService userService;
 
     @Autowired
-    public MessageController(final MongoDataSourceConfiguration dataSourceConfig,
-                             final MessageAPIInfo serviceInfo,
-                             final MessageService messageAPIService) {
-        this.dataSourceConfig = dataSourceConfig;
-        this.serviceInfo = serviceInfo;
-        this.messageAPIService = messageAPIService;
+    public void setMessageService(final MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @Autowired
-    @Qualifier("amqp-datasource")
-    public void setAmqpDatasource(final AMQPDatasource amqpDatasource) {
-        this.amqpDatasource = amqpDatasource;
+    public void setUserService(final UserService userService) {
+        this.userService = userService;
     }
 
-    /*
-     * To test the locale add the Accept-Language header to the API call (set it to pt for test)
-     */
-//    @RequestMapping(method = RequestMethod.GET)
-//    public Message sendMessage(@RequestParam(value = "messageid") int messageId,
-//                               @RequestParam(value = "message", defaultValue = "This is a default message") String message,
-//                               Locale locale) {
-//        return messageAPIService.generateMessage(messageId, message, locale);
-//    }
-
-    @RequestMapping(path = MessageAPIInfo.MONGO_INFO_PATH, method = RequestMethod.GET)
-    public MongoDataSourceConfiguration getMongoConfigInfo() {
-        return dataSourceConfig;
+    @PostMapping
+    public Message sendMessage(@RequestBody final Message message) {
+        User retrievedSender = userService.retrieveUser(message.getSender().getId());
+        User retrievedReceiver = userService.retrieveUser(message.getReceiver().getId());
+        return messageService.sendMessage(retrievedSender, retrievedReceiver, message);
     }
 
-    @RequestMapping(path = MessageAPIInfo.RABBIT_INFO_PATH, method = RequestMethod.GET)
-    public AMQPDatasource getRabbitConfigInfo() {
-        return amqpDatasource;
+    @DeleteMapping(path = MessageAPIInfo.URL_ID_PATH)
+    public Message deleteMessageById(@PathVariable(value = "id") final long id) {
+        return messageService.deleteMessage(id);
     }
 
-    @RequestMapping(path = MessageAPIInfo.SERVICE_INFO_PATH, method = RequestMethod.GET)
-    public MessageAPIInfo getServiceInfo() {
-        return serviceInfo;
+    @GetMapping
+    public List<Message> listAllMessages() {
+        return messageService.listAllMessages();
     }
 
-    @RequestMapping(path = MessageAPIInfo.BUSINESS_EXCEPTION_PATH, method = RequestMethod.GET)
-    public MessageAPIInfo getBusinessException() {
-        throw new BusinessRandomException("This is a Business Random Exception test.");
-    }
-
-    @RequestMapping(path = MessageAPIInfo.GENERAL_EXCEPTION_PATH, method = RequestMethod.GET)
-    public MessageAPIInfo getGeneralException() {
-        throw new RuntimeException("This is a Non Expected Runtime Exception test.");
+    @GetMapping(path = MessageAPIInfo.URL_ID_PATH)
+    public Message retrieveMessage(@PathVariable(value = "id") final long id) {
+        return messageService.retrieveMessage(id);
     }
 }

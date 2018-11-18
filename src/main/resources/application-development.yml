@@ -1,4 +1,8 @@
-datasource:
-  address: "development.localhost"
-  port: "9988"
-  collection: "my-collection"
+spring:
+  datasource:
+    name: "messagedb-dev"
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: "org.hibernate.dialect.H2Dialect"
