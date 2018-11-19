@@ -18,6 +18,7 @@ public class Message {
     private long id;
     @Setter @Getter
     @NotEmpty
+    @Column(columnDefinition = "TEXT")
     private String message;
     @Setter @Getter
     @NotNull
