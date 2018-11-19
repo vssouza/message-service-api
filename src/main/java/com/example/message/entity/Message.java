@@ -1,14 +1,18 @@
 package com.example.message.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "MESSAGEAPI_MESSAGES")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@EntityListeners(AuditingEntityListener.class)
 public class Message {
 
     @Id
@@ -28,6 +32,10 @@ public class Message {
     @NotNull
     @ManyToOne
     private User receiver;
+    @Getter
+    @CreatedDate
+    @Column(name = "created_date")
+    private Date createdDate;
 
     public Message(final String message, final User sender, final User receiver) {
         this.message = message;

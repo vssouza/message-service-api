@@ -7,10 +7,12 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpStatus;
 
 @SpringBootApplication
 @EnableConfigurationProperties
+@EnableJpaAuditing
 public class MessageApiApplication {
 
 //    @Bean
