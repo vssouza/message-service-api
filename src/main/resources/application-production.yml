@@ -6,3 +6,6 @@ spring:
       enabled: true
   jpa:
     database-platform: "org.hibernate.dialect.H2Dialect"
+    hibernate:
+      # none | validate | update | create-drop (default is none except for H2)
+      ddl: none
