@@ -4,7 +4,6 @@ import com.example.message.entity.ServiceInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class MessageAPIInfo {
     public static final String USER_BASE_PATH = BASE_PATH + "/users";
     public static final String MESSAGE_BASE_PATH = BASE_PATH + "/messages";
     public static final String SERVICE_INFO_BASE_PATH= BASE_PATH + "/info";
+    public static final String RECEIVER_BASE_PATH = "/receivers/{id}";
 
     public MessageAPIInfo() {
         paths = new ArrayList<>();
@@ -27,6 +27,7 @@ public class MessageAPIInfo {
         paths.add(USER_BASE_PATH + URL_ID_PATH);
         paths.add(SERVICE_INFO_BASE_PATH);
         paths.add(MESSAGE_BASE_PATH + URL_ID_PATH);
+        paths.add(MESSAGE_BASE_PATH + RECEIVER_BASE_PATH);
 
     }
 

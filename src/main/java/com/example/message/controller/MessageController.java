@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -42,16 +41,17 @@ public class MessageController {
     }
 
     @GetMapping
-    public List<Message> listAllMessages(@RequestParam(name = "receiver_id", required = false) final Long receiverId) {
-        if(receiverId == null) {
-            return messageService.listAllMessages();
-        } else {
-            return messageService.retrieveMessageByReceiver(receiverId);
-        }
+    public List<Message> listAllMessages() {
+        return messageService.listAllMessages();
     }
 
     @GetMapping(path = MessageAPIInfo.URL_ID_PATH)
     public Message retrieveMessage(@PathVariable(value = "id") final long id) {
         return messageService.retrieveMessage(id);
+    }
+
+    @GetMapping(path = MessageAPIInfo.RECEIVER_BASE_PATH)
+    public List<Message> listAllMessages(@PathVariable(value = "id") final long id) {
+        return messageService.retrieveMessageByReceiver(id);
     }
 }
