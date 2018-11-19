@@ -42,6 +42,10 @@ public class MessageService {
         throw new MessageNotFoundException("The specified message could not be found.");
     }
 
+    public List<Message> retrieveMessageByReceiver(final long receiverId) {
+        return messageRepository.findByReceiverId(receiverId);
+    }
+
     public Message deleteMessage(long id) {
         Message message = retrieveMessage(id);
         messageRepository.delete(message);

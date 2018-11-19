@@ -42,8 +42,12 @@ public class MessageController {
     }
 
     @GetMapping
-    public List<Message> listAllMessages() {
-        return messageService.listAllMessages();
+    public List<Message> listAllMessages(@RequestParam(name = "receiver_id", required = false) final Long receiverId) {
+        if(receiverId == null) {
+            return messageService.listAllMessages();
+        } else {
+            return messageService.retrieveMessageByReceiver(receiverId);
+        }
     }
 
     @GetMapping(path = MessageAPIInfo.URL_ID_PATH)
