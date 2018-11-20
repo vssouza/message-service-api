@@ -19,7 +19,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
 
     private static final String GLOBAL_EXCEPTION_MESSAGE = "exception.message.global";
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({Throwable.class, Exception.class})
     public final ResponseEntity<ErrorMessage> handleException(final Exception ex, final WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;

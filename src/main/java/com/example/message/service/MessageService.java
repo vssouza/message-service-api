@@ -43,7 +43,7 @@ public class MessageService {
     }
 
     public List<Message> retrieveMessageByReceiver(final long receiverId) {
-        return messageRepository.findByReceiverId(receiverId);
+        return messageRepository.findAllByReceiverId(receiverId);
     }
 
     public Message deleteMessage(long id) {

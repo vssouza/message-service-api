@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-public class H2DataSourceConfiguration {
+public class H2DataSourceConfig {
 
     @Setter
     @Getter

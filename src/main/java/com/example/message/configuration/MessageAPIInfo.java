@@ -45,7 +45,7 @@ public class MessageAPIInfo {
 
     @Getter
     @JsonProperty("h2-datasource")
-    private H2DataSourceConfiguration h2DataSourceConfiguration;
+    private H2DataSourceConfig h2DataSourceConfiguration;
 
     @Autowired
     public void setAmqpDatasource(final AMQPDatasource amqpDatasource) {
@@ -53,7 +53,7 @@ public class MessageAPIInfo {
     }
 
     @Autowired
-    public void setH2DataSourceConfiguration(final H2DataSourceConfiguration h2DataSourceConfiguration){
+    public void setH2DataSourceConfiguration(final H2DataSourceConfig h2DataSourceConfiguration){
         this.h2DataSourceConfiguration = h2DataSourceConfiguration;
     }
 
