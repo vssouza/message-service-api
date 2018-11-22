@@ -1,6 +1,7 @@
 package com.example.message.security;
 
 import com.example.message.configuration.MessageAPIInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,9 +16,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+
+    @Autowired
+    public void setRestAuthenticationEntryPoint(final RestAuthenticationFailureHandler restAuthenticationEntryPoint) {
+        this.restAuthenticationFailureHandler = restAuthenticationEntryPoint;
+    }
+
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests()
+
+        httpSecurity.cors().and().csrf().disable()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, MessageAPIInfo.BASE_PATH + "/login").permitAll()
                 .antMatchers(HttpMethod.GET, MessageAPIInfo.MESSAGE_BASE_PATH + "/**").permitAll()
                 .antMatchers(HttpMethod.GET,MessageAPIInfo.USER_BASE_PATH + "/**").permitAll()
@@ -28,7 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class)
                 //filter other requests to verify JWT Token
                 .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+                        UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(restAuthenticationFailureHandler);
 
     }
 

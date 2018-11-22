@@ -1,6 +1,8 @@
 package com.example.message.security;
 
+import com.example.message.security.common.ResponseErrorFlusher;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,7 +31,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         AccountCredentials credentials = new ObjectMapper()
                 .readValue(httpServletRequest.getInputStream(), AccountCredentials.class);
-
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
                         credentials.getUsername(),
@@ -46,5 +47,10 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             final FilterChain filterChain,
             final Authentication auth) throws IOException, ServletException {
         TokenAuthenticationService.addAuthentication(response, auth.getName());
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException, ServletException {
+        ResponseErrorFlusher.flush(request, response, ex, HttpStatus.FORBIDDEN);
     }
 }
