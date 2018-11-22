@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,9 @@ public class ResponseErrorFlusher {
         httpServletResponse.setStatus(status.value());
         httpServletResponse.setContentType("application/json");
         Map<String, Object> data = new HashMap<>();
-        data.put("timestamp", new Date());
+        data.put("timestamp", toJSONDate(new Date()));
         data.put("status", status.value());
+        data.put("error", status.getReasonPhrase());
         data.put("message", ex.getMessage());
         data.put("path", httpServletRequest.getRequestURL().toString());
 
@@ -28,5 +30,10 @@ public class ResponseErrorFlusher {
         mapper.writeValue(out, data);
         out.flush();
 
+    }
+
+    public static String toJSONDate(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSS'Z'");
+        return dateFormat.format(date);
     }
 }
