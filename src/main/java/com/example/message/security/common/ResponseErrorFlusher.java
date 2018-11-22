@@ -23,7 +23,7 @@ public class ResponseErrorFlusher {
         data.put("status", status.value());
         data.put("error", status.getReasonPhrase());
         data.put("message", ex.getMessage());
-        data.put("path", httpServletRequest.getRequestURL().toString());
+        data.put("path", httpServletRequest.getServletPath());
 
         OutputStream out = httpServletResponse.getOutputStream();
         com.fasterxml.jackson.databind.ObjectMapper mapper = new ObjectMapper();
