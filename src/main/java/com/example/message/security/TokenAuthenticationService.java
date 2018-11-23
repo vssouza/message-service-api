@@ -19,7 +19,7 @@ public class TokenAuthenticationService {
 
     static final String SECRET = "SecretPhrase";
     static final String TOKEN_PREFIX = "Bearer";
-    static final String HEADER_STRING = "Authorization";
+    static final String HEADER_STRING = "Authorisation";
 
     static void addAuthentication(final HttpServletResponse response, final String username) {
         String jwt = Jwts.builder()
