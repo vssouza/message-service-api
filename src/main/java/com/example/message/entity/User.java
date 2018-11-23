@@ -27,6 +27,8 @@ public class User {
     private String email;
 
     /*
+     * We are customizing our many to many to avoid hibernate to create multiple tables for the bidirectional relationship
+     *
      * @ManyToMany(mappedBy = "receivers")
      * private List<Message> receivedMessages;
      */

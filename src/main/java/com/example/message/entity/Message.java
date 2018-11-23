@@ -33,6 +33,8 @@ public class Message {
     @ManyToOne
     private User receiver;
     /*
+     * We are customizing our many to many to avoid hibernate to create multiple tables for the bidirectional relationship
+     *
      * @ManyToMany
      * @JoinTable(name = "receiver_message", joinColumns = @JoinColumn(name="message_id"),
      *              inverseJoinColumns = @JoinColumn("user_id"))
