@@ -26,6 +26,11 @@ public class User {
     @NotEmpty @Email
     private String email;
 
+    /*
+     * @ManyToMany(mappedBy = "receivers")
+     * private List<Message> receivedMessages;
+     */
+
     public User(final String username, final String email) {
         this.username = username;
         this.email = email;

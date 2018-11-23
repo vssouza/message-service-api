@@ -29,7 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.cors().and().csrf().disable()
+                .headers().frameOptions().sameOrigin()
+                .and()
                 .authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, MessageAPIInfo.BASE_PATH + "/login").permitAll()
                 .antMatchers(HttpMethod.GET, MessageAPIInfo.MESSAGE_BASE_PATH + "/**").permitAll()
                 .antMatchers(HttpMethod.GET,MessageAPIInfo.USER_BASE_PATH + "/**").permitAll()

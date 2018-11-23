@@ -32,6 +32,13 @@ public class Message {
     @NotNull
     @ManyToOne
     private User receiver;
+    /*
+     * @ManyToMany
+     * @JoinTable(name = "receiver_message", joinColumns = @JoinColumn(name="message_id"),
+     *              inverseJoinColumns = @JoinColumn("user_id"))
+     * private List<User> receivers;
+     */
+
     @Getter
     @CreatedDate
     @Column(name = "created_date")
