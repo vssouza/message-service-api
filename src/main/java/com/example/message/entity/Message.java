@@ -56,6 +56,9 @@ public class Message implements Serializable {
         this.receiver = receiver;
     }
 
+    // Not correct to use id for equals but that fits just for this quick sample
+    // use business keys for this not db generated ids since they may not exist
+    // on object creation
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,6 +67,9 @@ public class Message implements Serializable {
         return id == message.id;
     }
 
+    // Not correct to use id for equals but that fits just for this quick sample
+    // use business keys for this not db generated ids since they may not exist
+    // on object creation
     @Override
     public int hashCode() {
         return Objects.hash(id);

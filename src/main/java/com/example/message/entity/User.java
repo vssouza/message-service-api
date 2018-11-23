@@ -40,6 +40,9 @@ public class User  implements Serializable {
         this.email = email;
     }
 
+    // Not correct to use id for equals but that fits just for this quick sample
+    // use business keys for this not db generated ids since they may not exist
+    // on object creation
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,6 +51,9 @@ public class User  implements Serializable {
         return id == user.id;
     }
 
+    // Not correct to use id for equals but that fits just for this quick sample
+    // use business keys for this not db generated ids since they may not exist
+    // on object creation
     @Override
     public int hashCode() {
         return Objects.hash(id);
