@@ -7,15 +7,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "MESSAGEAPI_MESSAGES")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "messageapi_messages")
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @EntityListeners(AuditingEntityListener.class)
 @ToString
-public class Message {
+public class Message implements Serializable {
+
+    private static final long serialVersionUID = 7369952970186355164L;
 
     @Id
     @GeneratedValue
@@ -30,6 +33,10 @@ public class Message {
     @NotNull
     @ManyToOne
     private User sender;
+    @Getter
+    @CreatedDate
+    @Column(name = "created_date")
+    private Date createdDate;
     @Setter @Getter
     @NotNull
     @ManyToOne
@@ -42,11 +49,6 @@ public class Message {
      *              inverseJoinColumns = @JoinColumn("user_id"))
      * private List<User> receivers;
      */
-
-    @Getter
-    @CreatedDate
-    @Column(name = "created_date")
-    private Date createdDate;
 
     public Message(final String message, final User sender, final User receiver) {
         this.message = message;

@@ -6,13 +6,16 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "MESSAGEAPI_USERS")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "messageapi_users")
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @ToString
-public class User {
+public class User  implements Serializable {
+
+    private static final long serialVersionUID = 4243210585261225182L;
 
     @Id
     @GeneratedValue @SuppressWarnings("unused")
