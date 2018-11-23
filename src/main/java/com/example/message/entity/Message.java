@@ -8,11 +8,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "MESSAGEAPI_MESSAGES")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public class Message {
 
     @Id
@@ -52,4 +54,16 @@ public class Message {
         this.receiver = receiver;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return id == message.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
