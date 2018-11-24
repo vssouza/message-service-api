@@ -1,7 +1,6 @@
 package com.example.message.security;
 
 import com.example.message.security.common.ResponseErrorFlusher;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

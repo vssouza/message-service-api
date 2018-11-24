@@ -1,7 +1,6 @@
 package com.example.message.service.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.MethodArgumentNotValidException;
